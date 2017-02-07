@@ -1,0 +1,56 @@
+//
+// functions
+//
+
+@function font($font: $curr-f) {
+  @if not $done-m-init { @return error("m not initialized; please '@include init-m()'"); }
+  $font: $font or 'base';
+  @return map-get($fonts, $font) or error("$font '#{$font}' not found");
+}
+
+
+@function font-var($value-key, $f: $curr-f) {
+  $font: font($f);
+  @if $font {
+    @return map-get($font, $value-key) or error("key '#{$value-key}' not found in $font '#{$f or base}'");
+  }
+  @return $font; // will be null if $throw-catch is true; otherwise will have @error'd out
+}
+
+// alias of above
+@function f-var($args...) { @return font-var($args...);}
+
+//
+// value getters [auto m resolution]
+//
+
+/*
+  TODO
+  - allow for return of united value from __mult function here
+  - make sure these versions are used in font-setup routine
+ */
+
+@function f-size($size: $curr-size, $f: $curr-f) {
+  @if not $mult { @return null; }
+  $mult: __mult($size, 'size');
+  @if not is-unitless($mult) { @return error("$mult argument must resolve to unitless number"); }
+  @return $mult * 1rem * font-var('size-adjust', $f);
+}
+
+
+@function f-line($line: $curr-line, $f: $curr-f) {
+  @if not $mult { @return null; }
+  $mult: __mult($line, 'line');
+  @if not is-unitless($mult) { @return error("$mult argument must resolve to unitless number"); }
+  @return $mult * medium-var('line') / font-var('size-adjust', $f);
+}
+
+
+// size, font
+@function auto-line($size: $curr-size, $f: $curr-f) {
+  $size: f-size($size, $f);
+  $div: font-var('line-div', $f);
+  $min: font-var('line-min', $f);
+  $rel: f-line() / strip($size);
+  @return ceil($min / $rel * $div) / $div / strip($size);
+}

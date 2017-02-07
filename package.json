@@ -1,0 +1,19 @@
+{
+  "name": "sass-f",
+  "version": "0.9.0",
+  "description": "sass font management",
+  "main": "_index.scss",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "keywords": [
+    "sass",
+    "libsass",
+    "fonts"
+  ],
+  "author": "Lu Nelson",
+  "license": "MIT"
+}

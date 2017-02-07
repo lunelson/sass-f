@@ -1,0 +1,20 @@
+//
+// mixins
+//
+
+@mixin font($f) {
+
+  // family, size, line
+  $adjust: font-var('size-adjust', $f);
+  font-family: font-var('family', $f);
+  font-size: 1rem * $adjust;
+  @include mm-for('line') { line-height: medium-var('line') / $adjust; }
+
+  // letter spacing
+  $spacing-max: font-var('spacing-max', $f);
+  @if $spacing-max > 0 {
+
+    $sel: if(&, selector-parse(&, '*'), '*');
+    #{$sel} { letter-spacing: calc(#{$spacing-max}px - #{$spacing-max/font-var('spacing-end', $f)}em); }
+  }
+}

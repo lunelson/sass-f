@@ -1,0 +1,32 @@
+//
+// init
+//
+
+@mixin f-init() {
+
+  // check our dependency on the setup of sass-m
+  @if not $done-m-init { @include error('sass-f: sass-m must be initialized before sass-f'); }
+  // if length of fonts is 0, merge fonts-default against it;
+  $fonts: if(length($fonts) > 0, $fonts, $fonts-defaults) !global;
+  // merge each font against font-default; merge result back to $fonts
+  @each $f, $font in $fonts {
+    $font: map-merge($font-default, $font);
+    $fonts: map-merge($fonts, ($f: $font)) !global;
+  }
+  $done-f-init: true !global;
+}
+
+//
+// setup
+//
+
+@mixin f-setup() {
+
+  @if not $done-f-init { @include f-init(); }
+  // output either body or .ff-- class for each font
+  @each $f, $font in $fonts {
+    #{if($f=='base', body, '.ff--#{$f}')} { @include f($f); }
+  }
+  $done-f-setup: true !global;
+}
+
