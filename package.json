@@ -1,19 +1,37 @@
 {
   "name": "sass-f",
   "version": "0.9.0",
-  "description": "sass font management",
+  "description": "my sass font mgmt system",
   "main": "_index.scss",
   "directories": {
     "test": "test"
   },
+  "private": true,
   "scripts": {
     "test": "gulp test"
   },
+  "author": "Lu Nelson",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lunelson/sass-f.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lunelson/sass-f/issues"
+  },
+  "homepage": "https://github.com/lunelson/sass-f#readme",
   "keywords": [
     "sass",
     "libsass",
     "fonts"
   ],
-  "author": "Lu Nelson",
-  "license": "MIT"
+  "dependencies": {
+    "sass-throw": "github:lunelson/sass-throw"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-diff": "^1.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0"
+  }
 }
